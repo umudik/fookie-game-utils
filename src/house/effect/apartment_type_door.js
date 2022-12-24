@@ -6,7 +6,7 @@ module.exports = async function (ctx) {
                 for (let apartment_type of state.computed_data) {
                     const apartments_ = await ctx.remote.all("apartment", {
                         filter: {
-                            type: apartment_type._id
+                            type: apartment_type[ctx.helpers.pk("apartment_type")]
                         }
                     })
                     for (let apartment of apartments_) {
@@ -16,7 +16,7 @@ module.exports = async function (ctx) {
                             method: "update",
                             query: {
                                 filter: {
-                                    parent_id: apartment._id,
+                                    parent_id: apartment[ctx.helpers.pk("apartment")],
                                     tag: "exit_door"
                                 }
                             },

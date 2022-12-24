@@ -29,7 +29,7 @@ module.exports = async (ctx) => {
                         dimension: apartment.fixed_dimension,
                         position: apartment_type.location,
                         tag: "exit_door",
-                        parent_id: apartment._id
+                        parent_id: apartment[[ctx.helpers.pk("apartment")]]
                     }
                 })
 
@@ -57,7 +57,7 @@ module.exports = async (ctx) => {
 
                 character.position = apartment.position
                 character.dimension = 0
-                await ctx.remote.delete("object", door._id)
+                await ctx.remote.delete("object", door[ctx.helpers.pk("object")])
 
             },
         }

@@ -16,7 +16,7 @@ module.exports = async function (ctx) {
                 spawned: {
                     type: "boolean",
                     required: true,
-                    default: true
+                    default: false
                 },
                 dimension: {
                     type: "number",
@@ -35,20 +35,20 @@ module.exports = async function (ctx) {
                 read: {
                 },
                 create: {
-                    effect: ["rage_mp_entity_sync"],
+                    effect: [],
                     rule: ["need_type"],
                     modify: ["set_type"]
                 },
                 update: {
-                    effect: ["rage_mp_entity_sync"],
+                    effect: [],
                     rule: ["need_type"],
                     preRule: ["dont_spawn_twice"],
                     modify: ["set_type"]
                 },
                 delete: {
-                    effect: ["rage_mp_entity_sync"],
+                    effect: [],
                     rule: ["need_type"],
-                    modify: ["set_type", "add_entities_to_state"]
+                    modify: ["set_type", "set_computed_data"]
                 },
             }
         }

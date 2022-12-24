@@ -29,7 +29,7 @@ module.exports = async function (payload) {
             token: process.env.SYSTEM_TOKEN,
             model: modelName,
             method: "get",
-            query: { filter: { field: inventory._id } }
+            query: { filter: { field: inventory[ctx.helpers.pk("inventory")] } }
         })
 
         let model = res.data

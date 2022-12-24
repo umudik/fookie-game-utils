@@ -20,7 +20,7 @@ module.exports = async function (ctx) {
     if (res.data.length > 0) {
       payload.response.data = {
         token: jwt.sign(res.data[0], process.env.SYSTEM_TOKEN),
-        _id: res.data[0]._id
+        _id: res.data[0][[ctx.helpers.pk("player")]]
       }
     } else {
       payload.response.data = "login_error"
