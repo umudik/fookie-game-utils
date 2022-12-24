@@ -8,12 +8,12 @@ module.exports = async function (ctx) {
                 method: "update",
                 query: {
                     filter: {
-                        pk: state.item_1[ctx.helpers.pk("item")]
+                        inventory: state.inventory_1[ctx.helpers.pk("inventory")],
                     }
                 },
                 body: {
                     inventory: state.inventory_2[ctx.helpers.pk("inventory")],
-                    amount: 1
+                    amount: 4
 
                 }
             })

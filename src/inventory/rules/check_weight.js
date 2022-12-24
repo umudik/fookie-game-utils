@@ -12,7 +12,7 @@ module.exports = async function (ctx) {
             if (payload.method === "update") {
                 for (const item of state.items) {
                     let total = await currentWeight(ctx, item.inventory)
-                    console.log(total);
+
                     const item_type_res = await ctx.run({
                         token: process.env.SYSTEM_TOKEN,
                         method: "read",
@@ -22,8 +22,14 @@ module.exports = async function (ctx) {
                         }
                     })
                     const item_type = item_type_res.data[0]
-                    total += payload.body.amount ? (payload.body.amount - item.amount) * item_type.weight : item.amount * item_type.weight
-                    console.log(total);
+                    if (payload.body.amount) {
+                        total += payload.body.amount * item_type.weight
+                        total -= item.amount * item_type.weight
+                    } else {
+
+                    }
+                    total += item.amount * item_type.weight
+
                     const inventory = (await ctx.run({
                         token: process.env.SYSTEM_TOKEN,
                         method: "read",
@@ -41,10 +47,12 @@ module.exports = async function (ctx) {
                             filter: { pk: inventory.inventory_type }
                         }
                     })).data[0]
+
                     if (inventory_type.maxWeight < total) {
                         return false
                     }
                 }
+                return true
             }
             return false
         }

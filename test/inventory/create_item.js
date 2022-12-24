@@ -19,7 +19,7 @@ module.exports = async function (ctx) {
                 model: "item",
                 method: "create",
                 body: {
-                    item_type: state.item_type_1[ctx.helpers.pk("item_type")],
+                    item_type: state.item_type_2[ctx.helpers.pk("item_type")],
                     inventory: state.inventory_1[ctx.helpers.pk("inventory")],
                     slot: state.inventory_type.slotSize - 2,
                     amount: 4

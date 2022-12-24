@@ -23,6 +23,7 @@ module.exports = async function (ctx) {
                         return false
                     }
                 }
+                return true
             }
             return false
         }
