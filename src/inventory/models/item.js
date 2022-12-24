@@ -1,7 +1,7 @@
 module.exports = {
     name: 'item',
     database: process.env.DATABASE,
-    mixins: ["cache"],
+    mixins: [],
     schema: {
         item_type: {
             required: true,
@@ -14,10 +14,12 @@ module.exports = {
         slot: {
             required: true,
             type: "number",
+            min: 0
         },
         amount: {
             required: true,
             type: "number",
+            min: 1
         },
     },
     lifecycle: {
@@ -25,14 +27,14 @@ module.exports = {
             role: ["everybody"],
         },
         update: {
-            modify: [],
-            rule: [],
+            modify: ["find_items"],
+            rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
             role: ["system"],
             effect: ["item_out", "item_in"],
         },
         create: {
             modify: ["set_inventory_and_type", "slot_fixer"],
-            rule: ["check_weight", "openable", "has_slot", "is_slot_avaible"],
+            rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
             role: ["system"],
             effect: ["item_in"],
         },

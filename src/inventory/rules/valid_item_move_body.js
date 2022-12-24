@@ -7,7 +7,7 @@ module.exports = async function (ctx) {
             let slot = payload.body.slot
             let other = payload.body.other
 
-            let postable = ctx.run({
+            let postable = await ctx.run({
                 token: process.env.SYSTEM_TOKEN,
                 model: "item",
                 method: "test",
@@ -24,7 +24,7 @@ module.exports = async function (ctx) {
             })
 
 
-            let deletable = ctx.run({
+            let deletable = await ctx.run({
                 token: process.env.SYSTEM_TOKEN,
                 model: "item",
                 method: "test",
@@ -39,7 +39,7 @@ module.exports = async function (ctx) {
             })
 
             if (postable.data && deletable.data) {
-                ctx.run({
+                await ctx.run({
                     token: process.env.SYSTEM_TOKEN,
                     model: "item",
                     method: "create",
@@ -51,7 +51,7 @@ module.exports = async function (ctx) {
                         amount
                     }
                 })
-                ctx.run({
+                await ctx.run({
                     token: process.env.SYSTEM_TOKEN,
                     model: "item",
                     method: "update",

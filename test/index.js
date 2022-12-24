@@ -35,6 +35,10 @@
     await fookie.use(require("./bootstrap/create_player.js"))
     //-----start test-----
 
+    await fookie.use(require("./inventory/inventory.js"))
+    await fookie.use(require("./inventory/item_type.js"))
+    await fookie.use(require("./inventory/create_item.js"))
+    await fookie.use(require("./inventory/move_item.js"))
     //------end test------
 
     //------teardown------

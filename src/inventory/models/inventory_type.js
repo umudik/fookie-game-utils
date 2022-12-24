@@ -1,18 +1,13 @@
 module.exports = {
     name: 'inventory_type',
     database: process.env.DATABASE,
-    mixins: ["cache"],
+    mixins: [],
     schema: {
         name: {
             required: true,
             type: "string",
             unique: true,
             input: "text"
-        },
-        entity_type: {
-            required: true,
-            type: "string",
-            default: "player"
         },
         slotSize: {
             required: true,

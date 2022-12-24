@@ -1,2 +1,2 @@
 # fookie-game-utils
-Includes example game systems (player, inventory etc.etc.) develooped with Fookie JS.
+Includes example game systems develooped with Fookie JS.

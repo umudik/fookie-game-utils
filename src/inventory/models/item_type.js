@@ -1,7 +1,7 @@
 module.exports = {
     name: 'item_type',
     database: process.env.DATABASE,
-    mixins: ["cache"],
+    mixins: [],
     schema: {
         name: {
             require: true,
