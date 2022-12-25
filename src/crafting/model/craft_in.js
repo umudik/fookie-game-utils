@@ -3,14 +3,13 @@ module.exports = async function (ctx) {
         name: 'craft_in',
         database: process.env.DATABASE,
         schema: {
-            craft: {
+            craft_type: {
                 relation: "craft_type",
                 required: true,
             },
             item_type: {
                 relation: "item_type",
                 required: true,
-
             },
             amount: {
                 type: "number",

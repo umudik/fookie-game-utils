@@ -17,9 +17,6 @@ module.exports = async function (ctx) {
 
                 }
             })
-
-            console.log(move_item_res);
-
         }
     })
 }

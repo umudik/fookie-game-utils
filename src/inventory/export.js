@@ -3,6 +3,8 @@ module.exports = async function (ctx) {
     await ctx.model(require("./models/inventory"))
     await ctx.model(require("./models/item_type"))
     await ctx.model(require("./models/item"))
+    await ctx.model(require("./models/item_type_event"))
+
     await ctx.use(require("./rules/has_slot.js"))
     await ctx.use(require("./rules/check_weight.js"))
     await ctx.use(require("./rules/find_items.js"))
