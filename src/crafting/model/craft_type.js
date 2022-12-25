@@ -1,16 +1,14 @@
+
+
 module.exports = async function (ctx) {
     await ctx.model({
-        name: 'crafting_table',
+        name: 'craft_type',
         database: process.env.DATABASE,
-        mixins: [],
         schema: {
             name: {
                 type: "string",
-                input: "text"
-            },
-            desc: {
-                type: "string",
-                input: "text"
+                required: true,
+                unique: true
             },
         },
         lifecycle: {
@@ -28,6 +26,5 @@ module.exports = async function (ctx) {
             },
 
         }
-    }
-    )
+    })
 }

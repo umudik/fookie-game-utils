@@ -5,11 +5,14 @@ module.exports = async function (ctx) {
         name: 'craft',
         database: process.env.DATABASE,
         schema: {
-            name: {
-                type: "string",
+            craft_type: {
+                relation: "craft_type",
                 required: true,
-                unique: true
             },
+            inventory: {
+                relation: "inventory",
+                required: true,
+            }
         },
         lifecycle: {
             read: {

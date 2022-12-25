@@ -39,6 +39,8 @@
     await fookie.use(require("./inventory/item_type.js"))
     await fookie.use(require("./inventory/create_item.js"))
     await fookie.use(require("./inventory/move_item.js"))
+
+    await fookie.use(require("./crafting/crafting.js"))
     //------end test------
 
     //------teardown------
