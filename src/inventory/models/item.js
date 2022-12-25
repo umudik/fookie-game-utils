@@ -23,6 +23,12 @@ module.exports = {
         },
     },
     lifecycle: {
+        create: {
+            modify: ["set_inventory_and_type", "slot_fixer"],
+            rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
+            role: ["system"],
+            effect: ["item_in"],
+        },
         read: {
             role: ["everybody"],
         },
@@ -32,17 +38,17 @@ module.exports = {
             role: ["system"],
             effect: ["item_out", "item_in"],
         },
-        create: {
-            modify: ["set_inventory_and_type", "slot_fixer"],
-            rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
-            role: ["system"],
-            effect: ["item_in"],
-        },
         delete: {
             modify: [],
             rule: [],
             role: ["system"],
             effect: ["item_out"],
+        },
+        count: {
+            modify: [],
+            rule: [],
+            role: ["system"],
+            effect: [],
         },
     }
 }
