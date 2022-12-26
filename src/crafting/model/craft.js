@@ -22,9 +22,15 @@ module.exports = async function (ctx) {
                 role: ["system"],
             },
             create: {
+                modify: ["craft_sets"],
+                rule: ["has_items", "inventory_control"],
                 role: ["system"],
+                effect: ["craft_items"]
             },
             delete: {
+                role: ["system"],
+            },
+            count: {
                 role: ["system"],
             },
 

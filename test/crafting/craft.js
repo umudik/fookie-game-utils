@@ -110,6 +110,19 @@ module.exports = async function (ctx) {
                     amount: 1
                 }
             })).data
+
+            const craft = await ctx.run({
+                token: state.system_token,
+                model: "craft",
+                method: "create",
+                body: {
+                    craft_type: craft_type[ctx.helpers.pk("craft_type")],
+                    inventory: inventory[ctx.helpers.pk("inventory")],
+                }
+            })
+
+            console.log(craft);
+
         }
     })
 }

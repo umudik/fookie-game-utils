@@ -1,17 +1,47 @@
 module.exports = async function (ctx) {
+
+    ctx.helpers.currentWeight = async function (ctx, inventory_id) {
+        let res = await ctx.run({
+            token: process.env.SYSTEM_TOKEN,
+            method: "read",
+            model: "item",
+            query: {
+                filter: { inventory: inventory_id }
+            }
+        })
+
+        const items = res.data
+        let total = 0
+
+        for (let item of items) {
+            const item_type_res = await ctx.run({
+                token: process.env.SYSTEM_TOKEN,
+                method: "read",
+                model: "item_type",
+                query: {
+                    filter: { pk: item.item_type }
+                }
+            })
+
+            const item_type = item_type_res.data[0]
+            total += item.amount * item_type.weight
+        }
+
+        return total
+    }
     await ctx.lifecycle({
         name: "check_weight",
         function: async function (payload, ctx, state) {
 
             if (payload.method === "create") {
-                let total = await currentWeight(ctx, payload.body.inventory)
+                let total = await ctx.helpers.currentWeight(ctx, payload.body.inventory)
                 total += payload.body.amount * state.item_type.weight
                 return state.inventory_type.maxWeight >= total
             }
 
             if (payload.method === "update") {
                 for (const item of state.items) {
-                    let total = await currentWeight(ctx, item.inventory)
+                    let total = await ctx.helpers.currentWeight(ctx, item.inventory)
 
                     const item_type_res = await ctx.run({
                         token: process.env.SYSTEM_TOKEN,
@@ -61,33 +91,3 @@ module.exports = async function (ctx) {
 
 }
 
-
-async function currentWeight(ctx, inventory_id) {
-    let res = await ctx.run({
-        token: process.env.SYSTEM_TOKEN,
-        method: "read",
-        model: "item",
-        query: {
-            filter: { inventory: inventory_id }
-        }
-    })
-
-    const items = res.data
-    let total = 0
-
-    for (let item of items) {
-        const item_type_res = await ctx.run({
-            token: process.env.SYSTEM_TOKEN,
-            method: "read",
-            model: "item_type",
-            query: {
-                filter: { pk: item.item_type }
-            }
-        })
-
-        const item_type = item_type_res.data[0]
-        total += item.amount * item_type.weight
-    }
-
-    return total
-}
