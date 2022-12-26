@@ -41,6 +41,7 @@
     await fookie.use(require("./inventory/move_item.js"))
 
     await fookie.use(require("./crafting/craft.js"))
+    await fookie.use(require("./crafting/organise_inventory.js"))
     //------end test------
 
     //------teardown------

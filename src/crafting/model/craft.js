@@ -23,7 +23,7 @@ module.exports = async function (ctx) {
             },
             create: {
                 modify: ["craft_sets"],
-                rule: ["has_items", "inventory_control"],
+                rule: ["has_items", "control_slot", "control_weight"],
                 role: ["system"],
                 effect: ["craft_items"]
             },

@@ -6,10 +6,12 @@ module.exports = async function (ctx) {
 
     await ctx.use(require("./modify/craft_sets"))
 
-    await ctx.use(require("./rule/craft_items"))
-    await ctx.use(require("./rule/has_items"))
-    await ctx.use(require("./rule/inventory_control"))
 
+    await ctx.use(require("./rule/has_items"))
+    await ctx.use(require("./rule/control_weight"))
+    await ctx.use(require("./rule/control_slot"))
+
+    await ctx.use(require("./effect/craft_items"))
 
 
 }

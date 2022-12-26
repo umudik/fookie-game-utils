@@ -64,7 +64,7 @@ module.exports = async function (ctx) {
                     item_type: diamond[ctx.helpers.pk("item_type")],
                     inventory: inventory[ctx.helpers.pk("inventory")],
                     slot: 1,
-                    amount: 20
+                    amount: 2
                 }
             })).data
 
@@ -120,9 +120,6 @@ module.exports = async function (ctx) {
                     inventory: inventory[ctx.helpers.pk("inventory")],
                 }
             })
-
-            console.log(craft);
-
         }
     })
 }

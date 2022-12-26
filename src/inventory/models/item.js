@@ -24,10 +24,10 @@ module.exports = {
     },
     lifecycle: {
         create: {
-            modify: ["set_inventory_and_type", "slot_fixer"],
+            modify: ["set_inventory_and_type"],
             rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
             role: ["system"],
-            effect: ["item_in"],
+            effect: ["organise_inventory", "item_in"],
         },
         read: {
             role: ["everybody"],
