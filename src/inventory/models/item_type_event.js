@@ -5,7 +5,8 @@ module.exports = {
     schema: {
         item_type: {
             relation: "item_type",
-            required: true
+            required: true,
+            unique: true,
         },
         in: {
             type: "function",

@@ -27,7 +27,7 @@ module.exports = {
             modify: ["set_inventory_and_type"],
             rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
             role: ["system"],
-            effect: ["organise_inventory", "item_in"],
+            effect: ["organise_inventory", "do_item_type_events"],
         },
         read: {
             role: ["everybody"],
@@ -36,13 +36,13 @@ module.exports = {
             modify: ["find_items"],
             rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
             role: ["system"],
-            effect: ["item_out", "item_in"],
+            effect: ["do_item_type_events"],
         },
         delete: {
-            modify: [],
+            modify: ["find_items"],
             rule: [],
             role: ["system"],
-            effect: ["item_out"],
+            effect: ["do_item_type_events"],
         },
         count: {
             modify: [],

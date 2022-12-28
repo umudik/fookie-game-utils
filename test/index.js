@@ -2,7 +2,8 @@
 
     process.env.DATABASE = "store"
     process.env.SYSTEM_TOKEN = "umudik"
-    const fookie = await require("../index")()
+    const fookie = require("fookie")
+    await fookie.use(require("../index"))
 
     const a = await fookie.model({
         name: "test",
@@ -41,7 +42,7 @@
     await fookie.use(require("./inventory/move_item.js"))
 
     await fookie.use(require("./crafting/craft.js"))
-    await fookie.use(require("./crafting/organise_inventory.js"))
+    await fookie.use(require("./inventory/organise_inventory.js"))
     //------end test------
 
     //------teardown------
@@ -64,12 +65,14 @@
     for (const test of tests) {
         const start = Date.now()
         try {
+            console.log(`----- Starting: ${test.name} -----`);
             await test.function(state)
             const end = Date.now()
             results.push({ name: test.name, result: "✅", ms: end - start });
         } catch (error) {
             results.push({ name: test.name, result: "❌", error });
         }
+        console.log(`----- Ended: ${test.name} -----`);
     }
     console.table(results);
 })()

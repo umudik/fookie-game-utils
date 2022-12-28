@@ -21,7 +21,6 @@ module.exports = async function (ctx) {
                     stack: 64,
                 }
             })).data
-
             for (let i = 0; i < 10; i++) {
                 const r = await ctx.run({
                     token: state.system_token,
@@ -31,7 +30,7 @@ module.exports = async function (ctx) {
                         item_type: gold[ctx.helpers.pk("item_type")],
                         inventory: inventory[ctx.helpers.pk("inventory")],
                         slot: i,
-                        amount: 2
+                        amount: 10
                     }
                 })
             }

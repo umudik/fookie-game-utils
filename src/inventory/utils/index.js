@@ -105,16 +105,14 @@ module.exports = async function (ctx) {
     }
 
     ctx.helpers.organiseInventory = async function (inventory, it_id) {
-
         const its = await ctx.helpers.itemsByType(inventory, it_id)
         const items = ctx.lodash.sortBy(its, "slot")
-
         if (items.length === 0) {
             return false
         }
 
+        const total = ctx.lodash.sumBy(items, "amount")
 
-        console.log(items);
         const item_type = (await ctx.run({
             token: process.env.SYSTEM_TOKEN,
             model: "item_type",
@@ -126,44 +124,58 @@ module.exports = async function (ctx) {
             }
         })).data[0]
 
-        for (const item of items) {
-            await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "item",
-                method: "delete",
-                query: {
-                    filter: {
-                        pk: item[ctx.helpers.pk("item")],
-                    }
-                }
-            })
-        }
-
-
-
-        let flag = true
-        const slot = items[0].slot
-        const total = ctx.lodash.sumBy(items, "amount")
+        const amounts = []
         let remain = parseInt(total)
 
         for (; ;) {
-            const amount = remain > item_type.stack ? item_type.stack : remain
-            await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "item",
-                method: "create",
-                body: {
-                    slot: flag ? slot : undefined,
-                    inventory: inventory,
-                    amount: amount,
-                    item_type: item_type[ctx.helpers.pk("item_type")],
-                }
-            })
-            remain = remain - amount
-            if (remain === 0) {
+            if (remain > item_type.stack) {
+                amounts.push(item_type.stack)
+
+            } else {
+                amounts.push(remain)
                 break
             }
+            remain -= item_type.stack
         }
+
+        const deleteMe = []
+        for (let i = 0; i < items.length; i++) {
+
+            const item = items[i]
+            if (i < amounts.length) {
+                await ctx.run({
+                    token: process.env.SYSTEM_TOKEN,
+                    model: "item",
+                    method: "update",
+                    query: {
+                        filter: {
+                            pk: item[ctx.helpers.pk("item")],
+                        }
+                    },
+                    body: {
+                        amount: amounts[i]
+                    }
+                })
+            } else {
+                deleteMe.push(item[ctx.helpers.pk("item")])
+            }
+
+        }
+
+
+        const res = await ctx.run({
+            token: process.env.SYSTEM_TOKEN,
+            model: "item",
+            method: "delete",
+            query: {
+                filter: {
+                    id: {
+                        $or: deleteMe
+                    }
+                }
+            }
+
+        })
 
     }
 }

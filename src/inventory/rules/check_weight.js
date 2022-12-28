@@ -2,7 +2,6 @@ module.exports = async function (ctx) {
     await ctx.lifecycle({
         name: "check_weight",
         function: async function (payload, ctx, state) {
-
             if (payload.method === "create") {
                 let total = await ctx.helpers.currentWeight(ctx, payload.body.inventory)
                 total += payload.body.amount * state.item_type.weight
