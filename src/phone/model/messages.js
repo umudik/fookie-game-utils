@@ -3,10 +3,10 @@ module.exports = async function (ctx) {
         name: 'message',
         schema: {
             sender: {
-                relation: "character",
+                relation: "player",
             },
             target: {
-                relation: "character",
+                relation: "player",
             },
             message: {
                 type: "string",

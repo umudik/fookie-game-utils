@@ -12,7 +12,6 @@ module.exports = async function (ctx) {
                     password: "123456" + seed
                 }
             })
-
             if (!create_user_res.status) {
                 throw Error("Create User")
             }

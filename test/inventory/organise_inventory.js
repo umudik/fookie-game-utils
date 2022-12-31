@@ -47,7 +47,9 @@ module.exports = async function (ctx) {
 
                 }
             })
-            // console.log(res);
+            if (res.data.length != 2) {
+                throw Error("oganise_inventory")
+            }
 
         }
     })

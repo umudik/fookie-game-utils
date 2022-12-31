@@ -36,18 +36,18 @@ module.exports = async function (ctx) {
                 },
                 create: {
                     effect: [],
-                    rule: ["need_type"],
+                    rule: [],
                     modify: ["set_type"]
                 },
                 update: {
                     effect: [],
-                    rule: ["need_type"],
+                    rule: [],
                     preRule: ["dont_spawn_twice"],
                     modify: ["set_type"]
                 },
                 delete: {
                     effect: [],
-                    rule: ["need_type"],
+                    rule: [],
                     modify: ["set_type", "set_computed_data"]
                 },
             }

@@ -9,7 +9,7 @@ module.exports = async function (ctx) {
                 relation: "inventory"
             },
             owner: {
-                relation: "character"
+                relation: "player"
             },
             open: {
                 type: "boolean",

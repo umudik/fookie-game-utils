@@ -6,7 +6,7 @@ module.exports = {
             relation: "faction",
         },
         character: {
-            relation: "character",
+            relation: "player",
         },
         role: {
             type: "string",

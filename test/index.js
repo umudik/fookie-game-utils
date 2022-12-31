@@ -5,7 +5,7 @@
     const fookie = require("fookie")
     await fookie.use(require("../index"))
 
-    const a = await fookie.model({
+    await fookie.model({
         name: "test",
         database: "store",
         mixins: [],
@@ -40,9 +40,12 @@
     await fookie.use(require("./inventory/item_type.js"))
     await fookie.use(require("./inventory/create_item.js"))
     await fookie.use(require("./inventory/move_item.js"))
+    await fookie.use(require("./inventory/organise_inventory.js"))
 
     await fookie.use(require("./crafting/craft.js"))
-    await fookie.use(require("./inventory/organise_inventory.js"))
+
+    await fookie.use(require("./entity/index.js"))
+
     //------end test------
 
     //------teardown------

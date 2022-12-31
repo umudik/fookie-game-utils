@@ -17,7 +17,7 @@ module.exports = async function (ctx) {
                 input: "rich",
             },
             character: {
-                relation: "character"
+                relation: "player"
             }
         },
         lifecycle: {

@@ -140,32 +140,27 @@ module.exports = async function (ctx) {
 
         const deleteMe = []
         for (let i = 0; i < items.length; i++) {
-
             const item = items[i]
-            if (i < amounts.length) {
-                if (item.amount === amounts[i]) {
-                    await ctx.run({
-                        token: process.env.SYSTEM_TOKEN,
-                        model: "item",
-                        method: "update",
-                        query: {
-                            filter: {
-                                pk: item[ctx.helpers.pk("item")],
-                            }
-                        },
-                        body: {
-                            amount: amounts[i]
+            if (i < amounts.length) { //TODO improve here
+                await ctx.run({
+                    token: process.env.SYSTEM_TOKEN,
+                    model: "item",
+                    method: "update",
+                    query: {
+                        filter: {
+                            pk: item[ctx.helpers.pk("item")],
                         }
-                    })
-                }
+                    },
+                    body: {
+                        amount: amounts[i]
+                    }
+                })
             } else {
                 deleteMe.push(item[ctx.helpers.pk("item")])
             }
-
         }
 
-
-        const res = await ctx.run({
+        await ctx.run({
             token: process.env.SYSTEM_TOKEN,
             model: "item",
             method: "delete",

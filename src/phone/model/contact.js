@@ -3,10 +3,10 @@ module.exports = async function (ctx) {
         name: 'contact',
         schema: {
             owner: {
-                relation: "character",
+                relation: "player",
             },
             other: {
-                relation: "character",
+                relation: "player",
             }
         },
         database: process.env.DATABASE,

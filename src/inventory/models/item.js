@@ -21,6 +21,9 @@ module.exports = {
             type: "number",
             min: 1
         },
+        data: {
+            type: "object"
+        }
     },
     lifecycle: {
         create: {
