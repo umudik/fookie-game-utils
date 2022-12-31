@@ -36,7 +36,7 @@ module.exports = {
             modify: ["find_items"],
             rule: ["check_weight", "openable", "has_slot", "is_slot_avaible", "check_item_amount"],
             role: ["system"],
-            effect: ["do_item_type_events"],
+            effect: [],
         },
         delete: {
             modify: ["find_items"],

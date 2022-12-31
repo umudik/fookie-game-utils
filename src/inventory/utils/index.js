@@ -59,16 +59,16 @@ module.exports = async function (ctx) {
         return items
     }
 
-    ctx.helpers.removeItems = async function (inventory, item_type, remain) {
+    ctx.helpers.removeItems = async function (inventory, item_type, amount) {
         const items = await ctx.helpers.itemsByType(inventory, item_type)
 
-        if (await ctx.helpers.itemsAmount(inventory, item_type) < remain) {
+        if (await ctx.helpers.itemsAmount(inventory, item_type) < amount) {
             return false
         }
 
         for (const item of items) {
             for (; ;) {
-                if (remain >= item.amount) {
+                if (amount >= item.amount) {
                     await ctx.run({
                         token: process.env.SYSTEM_TOKEN,
                         model: "item",
@@ -90,13 +90,13 @@ module.exports = async function (ctx) {
                             }
                         },
                         body: {
-                            amount: item.amount - remain
+                            amount: item.amount - amount
                         }
                     })
                 }
 
-                remain = remain - item.amount
-                if (remain <= 0) {
+                amount = amount - item.amount
+                if (amount <= 0) {
                     break
                 }
             }
@@ -143,19 +143,21 @@ module.exports = async function (ctx) {
 
             const item = items[i]
             if (i < amounts.length) {
-                await ctx.run({
-                    token: process.env.SYSTEM_TOKEN,
-                    model: "item",
-                    method: "update",
-                    query: {
-                        filter: {
-                            pk: item[ctx.helpers.pk("item")],
+                if (item.amount === amounts[i]) {
+                    await ctx.run({
+                        token: process.env.SYSTEM_TOKEN,
+                        model: "item",
+                        method: "update",
+                        query: {
+                            filter: {
+                                pk: item[ctx.helpers.pk("item")],
+                            }
+                        },
+                        body: {
+                            amount: amounts[i]
                         }
-                    },
-                    body: {
-                        amount: amounts[i]
-                    }
-                })
+                    })
+                }
             } else {
                 deleteMe.push(item[ctx.helpers.pk("item")])
             }

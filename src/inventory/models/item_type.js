@@ -7,6 +7,11 @@ module.exports = {
             require: true,
             type: "string",
         },
+        key: {
+            unique: true,
+            require: true,
+            type: "string",
+        },
         weight: {
             require: true,
             type: "number",

@@ -3,8 +3,8 @@ module.exports = {
     database: "store",
     mixins: [],
     schema: {
-        item_type: {
-            relation: "item_type",
+        item_type_key: {
+            type: "string",
             required: true,
             unique: true,
         },

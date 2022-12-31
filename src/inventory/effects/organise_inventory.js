@@ -3,7 +3,10 @@ module.exports = async function (ctx) {
         name: "organise_inventory",
         wait: true,
         function: async function (payload, ctx, state) {
-            await ctx.helpers.organiseInventory(payload.body.inventory, payload.body.item_type)
+            if (payload.body.inventory || payload.body.amount) {
+                await ctx.helpers.organiseInventory(payload.body.inventory, payload.body.item_type)
+            }
+
         }
     })
 }
