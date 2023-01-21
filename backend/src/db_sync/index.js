@@ -89,48 +89,5 @@ module.exports = async (ctx) => {
         })
     }, 4 * 60 * 1000)
 
-    mp.events.add("playerExitVehicle", async function (player, entity) {
-        await ctx.run({
-            token: process.env.SYSTEM_TOKEN,
-            model: "vehicle",
-            method: "update",
-            options: {
-                dont_sync: true
-            },
-            query: {
-                filter: {
-                    pk: entity.getVariable("fookie_id"),
-                }
-            },
-            body: {
-                position: entity.position,
-                heading: entity.heading,
-                rotation: entity.rotation
-            }
-        });
-    })
-
-
-    mp.events.add("playerQuit", async (player) => {
-        if (player.getVariable("fookie_id")) {
-            ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "player",
-                method: "update",
-                options: {
-                    dont_sync: true
-                },
-                query: {
-                    filter: {
-                        pk: player.getVariable("fookie_id"),
-                    }
-                },
-                body: {
-                    position: player.position,
-                    heading: player.heading,
-                }
-            });
-        }
-    });
 
 }

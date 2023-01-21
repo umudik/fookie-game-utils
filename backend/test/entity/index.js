@@ -7,7 +7,6 @@ module.exports = async function (ctx) {
                 model: "entity_type",
                 method: "read",
             })).data
-            console.log(res);
         }
     })
 }

@@ -1,10 +1,4 @@
-(async function () {
-
-    process.env.DATABASE = "store"
-    process.env.SYSTEM_TOKEN = "umudik"
-    const fookie = require("fookie")
-    await fookie.use(require("../index"))
-
+module.exports = async function (fookie) {
     await fookie.model({
         name: "test",
         database: "store",
@@ -31,21 +25,29 @@
 
     }
 
+    await fookie.use(require("./inventory/inventory.js"))
 
     //------bootstrap-----
     await fookie.use(require("./bootstrap/create_player.js"))
     //-----start test-----
 
-    await fookie.use(require("./inventory/inventory.js"))
+
     await fookie.use(require("./inventory/item_type.js"))
     await fookie.use(require("./inventory/create_item.js"))
     await fookie.use(require("./inventory/move_item.js"))
     await fookie.use(require("./inventory/organise_inventory.js"))
+    await fookie.use(require("./inventory/player_inventory.js"))
 
     await fookie.use(require("./crafting/craft.js"))
 
     await fookie.use(require("./entity/index.js"))
 
+    await fookie.use(require("./bank/index.js"))
+
+    await fookie.use(require("./shop/index.js"))
+
+    await fookie.use(require("./drop/index.js"))
+    await fookie.use(require("./race/index.js"))
     //------end test------
 
     //------teardown------
@@ -71,11 +73,13 @@
             console.log(`----- Starting: ${test.name} -----`);
             await test.function(state)
             const end = Date.now()
-            results.push({ name: test.name, result: "✅", ms: end - start });
+            results.push({ name: test.name, result: "PASS", ms: end - start });
         } catch (error) {
-            results.push({ name: test.name, result: "❌", error });
+            console.log(error);
+            const end = Date.now()
+            results.push({ name: test.name, result: "ERROR", ms: end - start });
         }
         console.log(`----- Ended: ${test.name} -----`);
     }
     console.table(results);
-})()
+}

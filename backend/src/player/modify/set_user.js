@@ -17,7 +17,8 @@ module.exports = async function (ctx) {
             },
 
           })).data[0]
-        } catch (error) { }
+        } catch (error) {
+        }
       }
     }
   })

@@ -8,10 +8,14 @@ module.exports = async function (ctx) {
                 method: "create",
                 token: state.system_token,
                 body: {
-                    email: "umut" + seed,
-                    password: "123456" + seed
+                    email: "umut",
+                    password: "umut"
+                },
+                options: {
+                    dont_sync: true
                 }
             })
+
             if (!create_user_res.status) {
                 throw Error("Create User")
             }
@@ -21,17 +25,18 @@ module.exports = async function (ctx) {
                 method: "login",
                 query: {
                     filter: {
-                        email: "umut" + seed,
-                        password: "123456" + seed,
+                        email: "umut",
+                        password: "umut",
                     }
 
                 }
             })
 
             state.token = login_user_res.data.token
-            state.user_id = create_user_res.data[ctx.helpers.pk("player")]
+            state.player_id = create_user_res.data[ctx.helpers.pk("player")]
+
             console.log(state.token);
-            console.log(state.user_id);
+            console.log(state.player_id);
 
             state.players = []
             for (let i = 0; i < 5; i++) {
@@ -42,8 +47,12 @@ module.exports = async function (ctx) {
                     body: {
                         email: `MOCK_PLAYER_${seed}_${Math.round(Math.random() * 100000)}`,
                         password: `MOCK_PASSWORD_${seed}_${Math.round(Math.random() * 100000)}`
+                    },
+                    options: {
+                        dont_sync: true
                     }
                 })
+
                 if (!player.status) {
                     throw Error("Create User")
                 }
