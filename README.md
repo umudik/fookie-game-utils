@@ -1,2 +1,2 @@
 # fookie-game-utils
-Includes example game systems develooped with Fookie JS.
+Includes example game systems developed with Fookie JS.
