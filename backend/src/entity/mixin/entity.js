@@ -35,20 +35,21 @@ module.exports = async function (ctx) {
                 read: {
                 },
                 create: {
-                    effect: ["rage_mp_entity_sync"],
-                    rule: ["need_type"],
-                    modify: ["set_type"]
+                    effect: [],
+                    role: ["system"],
+                    rule: [],
+                    modify: []
                 },
                 update: {
-                    effect: ["rage_mp_entity_sync"],
-                    rule: ["need_type"],
-                    preRule: ["dont_spawn_twice"],
-                    modify: ["set_type"]
+                    effect: [],
+                    rule: [],
+                    preRule: [],
+
                 },
                 delete: {
-                    effect: ["rage_mp_entity_sync"],
-                    rule: ["need_type"],
-                    modify: ["set_type", "add_entities_to_state"]
+                    effect: [],
+                    rule: [],
+                    modify: []
                 },
             }
         }

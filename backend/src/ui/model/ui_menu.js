@@ -46,11 +46,4 @@ module.exports = async function (ctx) {
       payload.body.player = state.player.fookie_id
     }
   })
-  await ctx.lifecycle({
-    name: "menu_open",
-    function: async function (payload, ctx, state) {
-      //todo
-      mp.players.callInRange(state.player.position, 15, 'apiSync', payload.body.response);
-    }
-  })
 };

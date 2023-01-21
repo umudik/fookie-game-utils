@@ -19,7 +19,6 @@
     await fookie.use(require("./house/export"))
     await fookie.use(require("./government/export"))
     await fookie.use(require("./phone/export"))
-    await fookie.use(require("./db_sync/index.js"))
     await fookie.use(require("./ui/export.js"))
     await fookie.use(require("./bank/export.js"))
     await fookie.use(require("./item_bomb/export.js"))
