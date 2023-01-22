@@ -8,10 +8,9 @@ onMounted(async () => {});
 </script>
 
 <template lang="pug">
-v-app(app)
+v-app(app, dark)
   v-main(app)
-    v-container(app)
-      div hi
+    router-view
 </template>
 
 

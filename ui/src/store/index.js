@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
-export const useStore = defineStore("counter", {
+export const useStore = defineStore("store", {
     state: () => {
         return {
             entites: {
@@ -11,18 +11,19 @@ export const useStore = defineStore("counter", {
                 mixin: [],
             },
             url: "http://localhost:2626",
-            token: "umudik",
+            player: null,
+            token: "",
+            player_id: ""
         };
     },
     actions: {
-        list(model) { return this.$state.entites[model] },
         async run(payload) {
-            const { url, token } = this.$state
+            const url = this.url
+            const token = this.token
             const res = await axios.post(url, {
                 ...payload, token
             })
-            return await res.data
+            return res.data
         },
-        sync(payload) { return this.$state.entites[model] },
     },
 });

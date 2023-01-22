@@ -27,7 +27,9 @@
     // ADD SOMETHINGS
     await fookie.use(require("./house/menus/index.js"))
     await fookie.listen(2626)
+    if (process.env.DATABASE === "store") {
+        await require("../test/index.js")(fookie)
+    }
 
-    await require("../test/index.js")(fookie)
 })()
 
