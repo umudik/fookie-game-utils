@@ -45,11 +45,12 @@ const login = async function () {
       },
     })
   ).data;
+
   if (res.status) {
     store.token = res.data.token;
     store.player_id = res.data.id;
     store.player = (
-      await store.run({
+      await store.remoteRun({
         model: "player",
         method: "read",
         query: {

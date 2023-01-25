@@ -9,6 +9,7 @@
   "dependencies": {
     "@mdi/font": "7.0.96",
     "axios": "^1.2.1",
+    "fookie": "^0.9.945",
     "lodash": "^4.17.21",
     "pinia": "^2.0.27",
     "roboto-fontface": "*",

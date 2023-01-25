@@ -28,7 +28,9 @@ v-card
                 span.tw-text-xs {{ index + 1 }}
                 v-sheet.mt-auto {{ getItemType(getItem(index).item_type).name }}
                 v-sheet.mt-auto.ml-auto
-                  span.tw-text-3xl {{ getItem(index).amount }}x
+                  span.tw-text-xl {{ getItem(index).amount }}
+                  span x
+
             v-sheet(
               v-if="!getItem(index)",
               height="110",
@@ -56,7 +58,7 @@ const item_types = ref([]);
 
 onMounted(async function () {
   inventory.value = (
-    await store.run({
+    await store.remoteRun({
       model: "inventory",
       method: "read",
       query: {
@@ -68,7 +70,7 @@ onMounted(async function () {
   ).data[0];
 
   items.value = (
-    await store.run({
+    await store.remoteRun({
       model: "item",
       method: "read",
       query: {
@@ -80,14 +82,14 @@ onMounted(async function () {
   ).data;
 
   item_types.value = (
-    await store.run({
+    await store.remoteRun({
       model: "item_type",
       method: "read",
     })
   ).data;
 
   inventory_type.value = (
-    await store.run({
+    await store.remoteRun({
       model: "inventory_type",
       method: "read",
       query: {

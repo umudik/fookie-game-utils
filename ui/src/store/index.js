@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
+
 export const useStore = defineStore("store", {
-    state: () => {
+    state: function () {
         return {
             entites: {
                 model: [],
@@ -17,7 +18,7 @@ export const useStore = defineStore("store", {
         };
     },
     actions: {
-        async run(payload) {
+        async remoteRun(payload) {
             const url = this.url
             const token = this.token
             const res = await axios.post(url, {
