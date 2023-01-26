@@ -12,6 +12,6 @@ module.exports = async function (ctx) {
     await ctx.use(require("./rule/control_slot"))
 
     await ctx.use(require("./effect/craft_items"))
-
+    //todo add craft chance
 
 }

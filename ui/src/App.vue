@@ -1,10 +1,17 @@
 <script setup>
 import { useStore } from "@/store/index.js";
 import { onMounted, ref, watch } from "vue";
+import router from "@/plugins/router";
 import lodash from "lodash";
 const store = useStore();
-
-onMounted(async () => {});
+watch(
+  () => store.token,
+  function (n) {
+    if (!n) {
+      router.push({ name: "login" });
+    }
+  }
+);
 </script>
 
 <template lang="pug">

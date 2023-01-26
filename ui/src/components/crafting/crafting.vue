@@ -3,14 +3,14 @@ v-card
   v-card-title Crafting
   v-card-text 
     v-row
-      v-col
+      v-col(cols="4")
         v-list
           v-list-item(
             v-for="(ct, i) in craft_types",
             link,
             @click="select(ct)"
           ) {{ ct.name }}
-      v-col 
+      v-col(cols="8")
         v-row
           v-col Input
             v-list(:items="ins", item-props)
