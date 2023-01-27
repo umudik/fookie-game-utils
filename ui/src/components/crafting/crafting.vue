@@ -18,7 +18,7 @@ v-card
             v-list(:items="outs", item-props)
         v-row
           v-col
-            v-btn CRAFT
+            v-btn(@click="craft") CRAFT
 </template>
   
   <script setup>
@@ -96,6 +96,17 @@ const outs = computed(function () {
 const getItemType = function (id) {
   return lodash.find(item_types.value, { id: id });
 };
+
+async function craft() {
+  const r = await store.remoteRun({
+    model: "craft",
+    method: "create",
+    body: {
+      craft_type: selected_ct.value.id,
+    },
+  });
+  console.log(r);
+}
 </script>
   
   <style>

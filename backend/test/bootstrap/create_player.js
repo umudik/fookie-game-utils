@@ -33,12 +33,12 @@ module.exports = async function (ctx) {
             })
 
             state.token = login_user_res.data.token
-            state.player_id = create_user_res.data[ctx.helpers.pk("player")]
+            state.user_id = create_user_res.data[ctx.helpers.pk("player")]
 
             console.log(state.token);
-            console.log(state.player_id);
+            console.log(state.user_id);
 
-            state.players = []
+            state.users = []
             for (let i = 0; i < 5; i++) {
                 const player = await ctx.run({
                     model: "player",
@@ -56,7 +56,7 @@ module.exports = async function (ctx) {
                 if (!player.status) {
                     throw Error("Create User")
                 }
-                state.players.push(player.data)
+                state.users.push(player.data)
             }
         }
     })

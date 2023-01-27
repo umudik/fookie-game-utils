@@ -32,6 +32,27 @@ module.exports = async function (ctx) {
 
             state.item_type_1 = item_type_1
             state.item_type_2 = item_type_2
+
+
+
+
+            // EXAMPLE ITEMS
+
+            const list = ["iron", "copper", "wood", "gold", "plastic", "electronic", "clue", "screw", "lockpick", "water", "chocolate", "cola", "phone"]
+            for (const i of list) {
+                await ctx.run({
+                    token: state.system_token,
+                    model: "item_type",
+                    method: "create",
+                    body: {
+                        name: i,
+                        weight: Math.random(),
+                        stack: 200,
+                        image: "https://i.picsum.photos/id/600/200/200.jpg?hmac=x3_SXBDfy4wqgriXAHmONXmt4rEB-k8sVoY7P5q8Bgs"
+                    }
+                })
+            }
+
         }
     })
 }

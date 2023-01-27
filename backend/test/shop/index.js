@@ -41,7 +41,7 @@ module.exports = async function (ctx) {
                 model: "shop",
                 method: "create",
                 body: {
-                    owner: state.player_id,
+                    owner: state.user_id,
                     title: "MY Shop",
                 }
             })

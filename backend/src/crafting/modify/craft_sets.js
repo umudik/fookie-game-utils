@@ -70,7 +70,7 @@ module.exports = async function (ctx) {
                     }
                 }
             })).data
-
+            return true
         }
     })
 }

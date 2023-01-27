@@ -5,6 +5,7 @@ module.exports = async function (ctx) {
     await ctx.use(require("./model/craft_type"))
 
     await ctx.use(require("./modify/craft_sets"))
+    await ctx.use(require("./modify/craft_set_player_inventory.js"))
 
 
     await ctx.use(require("./rule/has_items"))

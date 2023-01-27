@@ -22,10 +22,13 @@ module.exports = async function (ctx) {
                 role: ["system"],
             },
             create: {
-                modify: ["craft_sets"],
-                rule: ["has_items", "control_slot", "control_weight"],
-                role: ["system"],
-                effect: ["craft_items"]
+                modify: [],
+                rule: ["craft_sets", "has_items", "control_slot", "control_weight"],
+                role: ["system", "logged_in"],
+                effect: ["craft_items"],
+                accept: {
+                    logged_in: ["craft_set_player_inventory"]
+                }
             },
             delete: {
                 role: ["system"],

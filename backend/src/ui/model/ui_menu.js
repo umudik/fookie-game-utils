@@ -43,7 +43,7 @@ module.exports = async function (ctx) {
   await ctx.lifecycle({
     name: "add_player_to_menu",
     function: async function (payload, ctx, state) {
-      payload.body.player = state.player.fookie_id
+      payload.body.player = state.user.fookie_id
     }
   })
 };

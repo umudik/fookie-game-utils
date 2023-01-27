@@ -1,7 +1,6 @@
 <template lang="pug">
 v-card
   v-card-title Inventory
-  v-card-subtitle {{ inventory_id }}
   v-card-text 
     v-row.drop 
       v-col.drop_item(

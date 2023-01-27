@@ -34,6 +34,9 @@ export const useStore = defineStore("store", {
         async fookie() {
             await init
             return fookie
+        },
+        list(model) {
+            return this.store[model]
         }
     },
 });

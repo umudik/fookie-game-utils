@@ -12,10 +12,9 @@ module.exports = async function (ctx) {
             method: "read",
             query: {
               filter: {
-                pk: obj.id
+                email: obj.email //TEST İÇİN DEĞİŞTİRDİN PK ÜSTÜNDEN BAK
               }
-            },
-
+            }
           })).data[0]
         } catch (error) {
         }
