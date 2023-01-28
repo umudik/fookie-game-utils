@@ -86,7 +86,6 @@ const outs = computed(function () {
   });
   return arr.map(function (i) {
     return {
-      subtitle: "hi",
       title: getItemType(i.item_type).name + ` x${i.amount}`,
       prependAvatar: getItemType(i.item_type).image,
     };

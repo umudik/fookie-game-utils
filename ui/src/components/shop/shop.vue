@@ -1,7 +1,22 @@
 <template lang="pug">
 v-card
   v-card-title Shop
-  v-card-text {{ shop_item_type_prices }}
+  v-card-text
+    v-item-group
+      v-list
+        v-item(
+          v-for="ip of shop_item_type_prices",
+          v-slot="{ isSelected, selectedClass, toggle }"
+        )
+          v-list-item(
+            :title="getItemType(ip.item_type).name",
+            :prepend-avatar="getItemType(ip.item_type).image",
+            :subtitle="`${ip.type} ${ip.price}$`",
+            link,
+            @click="() => (isSelected ? null : toggle())"
+          )
+            template(v-slot:append, v-if="isSelected")
+              v-btn(@click="txn(ip)") {{ ip.type }}
 </template>
   
   <script setup>
@@ -64,7 +79,7 @@ onMounted(async function () {
         },
       },
     })
-  ).data[0];
+  ).data;
 
   shop_item_type_prices.value = (
     await store.remoteRun({
@@ -72,15 +87,18 @@ onMounted(async function () {
       method: "read",
       query: {
         filter: {
-          inventory: shop.inventory,
+          shop: props.shop_id,
         },
       },
     })
-  ).data[0];
+  ).data;
 });
 
-const getItem = function (index) {
-  return lodash.find(items.value, { slot: index });
+const getItemType = function (id) {
+  return lodash.find(store.data.item_type, { id });
+};
+const txn = async function (data) {
+  console.log(data.type);
 };
 </script>
   

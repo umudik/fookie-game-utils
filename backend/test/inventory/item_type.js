@@ -38,7 +38,7 @@ module.exports = async function (ctx) {
 
             // EXAMPLE ITEMS
 
-            const list = ["iron", "copper", "wood", "gold", "plastic", "electronic", "clue", "screw", "lockpick", "water", "chocolate", "cola", "phone"]
+            const list = ["iron", "copper", "wood", "plastic", "electronic", "clue", "screw", "lockpick", "water", "chocolate", "cola", "phone"]
             for (const i of list) {
                 await ctx.run({
                     token: state.system_token,

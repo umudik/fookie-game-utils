@@ -37,15 +37,13 @@ import { onBeforeMount, onMounted, ref, watch } from "vue";
 const store = useStore();
 const tab = ref("player_inventory");
 onMounted(async function () {
-  const fookie = await store.fookie();
   const res = await store.remoteRun({
     model: "model",
     method: "read",
   });
 
   for (let model of res.data) {
-    model.database = "store";
-    const res = await fookie.model(lodash.omit(model, ["id", "lifecycle"]));
+    store.data[model.name] = [];
   }
 
   const list = ["item_type", "craft_type", "craft_in", "craft_out"];
@@ -54,17 +52,7 @@ onMounted(async function () {
       model: m,
       method: "read",
     });
-    for (let entity of response.data) {
-      await fookie.run({
-        model: m,
-        method: "create",
-        body: entity,
-      });
-    }
+    store.data[m] = response.data;
   }
-  const response = await store.remoteRun({
-    model: m,
-    method: "read",
-  });
 });
 </script>
