@@ -6,7 +6,7 @@ module.exports = async function (ctx) {
     schema: {
       name: {
         type: "string",
-
+        required: true,
       },
       email: {
         type: "string",

@@ -8,6 +8,7 @@ module.exports = async function (ctx) {
                 method: "create",
                 token: state.system_token,
                 body: {
+                    name: "umut bicer",
                     email: "umut",
                     password: "umut"
                 },
@@ -45,6 +46,7 @@ module.exports = async function (ctx) {
                     method: "create",
                     token: state.system_token,
                     body: {
+                        name: `MOCK_NAME_${seed}_${Math.round(Math.random() * 100000)}`,
                         email: `MOCK_PLAYER_${seed}_${Math.round(Math.random() * 100000)}`,
                         password: `MOCK_PASSWORD_${seed}_${Math.round(Math.random() * 100000)}`
                     },

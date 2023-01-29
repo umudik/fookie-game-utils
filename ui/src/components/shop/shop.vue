@@ -1,6 +1,7 @@
 <template lang="pug">
 v-card
   v-card-title Shop
+  v-card-subtitle Owner: {{ owner.name }}
   v-card-text
     v-item-group
       v-list
@@ -11,12 +12,26 @@ v-card
           v-list-item(
             :title="getItemType(ip.item_type).name",
             :prepend-avatar="getItemType(ip.item_type).image",
-            :subtitle="`${ip.type} ${ip.price}$`",
+            :subtitle="`Price ${ip.price}$ | ${ip.type == 'buy' ? 'Stock ' + stock(ip.item_type) + 'x |' : ''} `",
             link,
             @click="() => (isSelected ? null : toggle())"
           )
             template(v-slot:append, v-if="isSelected")
-              v-btn(@click="txn(ip)") {{ ip.type }}
+              v-text-field(
+                density="comfortable",
+                style="width: 75px",
+                type="number",
+                hide-details,
+                v-model="amount",
+                variant="outlined"
+              )
+
+              v-btn.tw-ml-2(
+                variant="tonal",
+                @click="txn(ip)",
+                :disabled="ip.type == 'buy' && stock(ip.item_type) === 0",
+                :color="ip.type == 'buy' && stock(ip.item_type) === 0 ? 'red' : ''"
+              ) {{ ip.type }}
 </template>
   
   <script setup>
@@ -27,9 +42,11 @@ const store = useStore();
 
 const props = defineProps(["shop_id"]);
 const shop = ref({});
+const owner = ref({});
 const inventory = ref({});
 const inventory_type = ref({});
 const items = ref([]);
+const amount = ref(1);
 const shop_item_type_prices = ref([]);
 
 onMounted(async function () {
@@ -45,13 +62,24 @@ onMounted(async function () {
     })
   ).data[0];
 
+  owner.value = (
+    await store.remoteRun({
+      model: "player",
+      method: "read",
+      query: {
+        filter: {
+          pk: shop.value.owner,
+        },
+      },
+    })
+  ).data[0];
   inventory.value = (
     await store.remoteRun({
       model: "inventory",
       method: "read",
       query: {
         filter: {
-          pk: shop.inventory,
+          pk: shop.value.inventory,
         },
       },
     })
@@ -75,7 +103,7 @@ onMounted(async function () {
       method: "read",
       query: {
         filter: {
-          inventory: shop.inventory,
+          inventory: shop.value.inventory,
         },
       },
     })
@@ -87,7 +115,7 @@ onMounted(async function () {
       method: "read",
       query: {
         filter: {
-          shop: props.shop_id,
+          shop: shop.value.id,
         },
       },
     })
@@ -97,8 +125,25 @@ onMounted(async function () {
 const getItemType = function (id) {
   return lodash.find(store.data.item_type, { id });
 };
-const txn = async function (data) {
-  console.log(data.type);
+const txn = async function (ip) {
+  const res = await store.remoteRun({
+    model: "shop_transaction",
+    method: "create",
+    body: {
+      shop: shop.value.id,
+      item_type: ip.item_type,
+      amount: Number(amount.value),
+      type: ip.type,
+    },
+  });
+  console.log(res);
+};
+
+const stock = function (item_type) {
+  const its = lodash.filter(items.value, {
+    item_type,
+  });
+  return lodash.sumBy(its, "amount");
 };
 </script>
   
