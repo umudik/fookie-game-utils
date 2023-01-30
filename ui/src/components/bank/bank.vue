@@ -1,11 +1,13 @@
 <template lang="pug">
 v-card
   v-card-title Bank
-  v-card-subtitle Umut
+  v-card-subtitle {{ owner.name }}
   v-card-text Balance: {{ balance }}$
   v-divider
   v-card-text
     v-text-field(
+      v-model="amount",
+      min="0",
       label="Amount",
       prefix="$",
       type="number",
@@ -13,13 +15,12 @@ v-card
     )
   v-card-actions 
     v-spacer
-    v-btn Withdraw
-    v-btn Deposit
+    v-btn(@click="withdraw") Withdraw
+    v-btn(@click="deposit") Deposit
     v-spacer
-  v-card-text {{ items }}
 </template>
   
-  <script setup>
+<script setup>
 import lodash from "lodash";
 import { useStore } from "@/store/index.js";
 import { onMounted, ref, watch, defineProps } from "vue";
@@ -30,6 +31,8 @@ const owner = ref({});
 const inventory = ref({});
 const items = ref([]);
 const balance = ref(0);
+const amount = ref(0);
+const money = lodash.find(store.data.item_type, { name: "money" });
 
 onMounted(async function () {
   owner.value = (
@@ -43,7 +46,6 @@ onMounted(async function () {
       },
     })
   ).data[0];
-
   bank_account.value = (
     await store.remoteRun({
       model: "bank_account",
@@ -82,28 +84,31 @@ onMounted(async function () {
   balance.value = lodash.sumBy(items.value, "amount");
 });
 
-const getItemType = function (id) {
-  return lodash.find(store.data.item_type, { id });
-};
-const txn = async function (ip) {
+const withdraw = async function () {
   const res = await store.remoteRun({
-    model: "shop_transaction",
+    model: "move_item",
     method: "create",
     body: {
-      shop: shop.value.id,
-      item_type: ip.item_type,
+      from: bank_account.value.inventory,
+      to: owner.value.inventory,
+      item_type: money.id,
       amount: Number(amount.value),
-      type: ip.type,
     },
   });
   console.log(res);
 };
 
-const stock = function (item_type) {
-  const its = lodash.filter(items.value, {
-    item_type,
+const deposit = async function () {
+  const res = await store.remoteRun({
+    model: "move_item",
+    method: "create",
+    body: {
+      from: owner.value.inventory,
+      to: bank_account.value.inventory,
+      item_type: money.id,
+      amount: Number(amount.value),
+    },
   });
-  return lodash.sumBy(its, "amount");
 };
 </script>
   

@@ -133,7 +133,7 @@ module.exports = async function (ctx) {
 
             const move_in_same_inv = payload.body.to === payload.body.from
 
-            if (!move_in_same_inv) {
+            if (to_type.name === "drop" || from_type.name === "drop") {
                 if (to_type.name === "drop" && from_type.name !== "player") {
                     return false
                 }
@@ -143,10 +143,25 @@ module.exports = async function (ctx) {
                 }
             }
 
-            if (state.user && !(payload.body.from === state.user.inventory || payload.body.to === state.user.inventory)) {
-                return false
+            if (to_type.name === "bank" || from_type.name === "bank") {
+                if (to_type.name === "bank" && from_type.name !== "player") {
+                    return false
+                }
+
+                if (to_type.name === "player" && from_type.name !== "bank") {
+                    return false
+                }
             }
 
+
+
+
+
+            if (state.user) {
+                if (!(payload.body.from === state.user.inventory || payload.body.to === state.user.inventory)) {
+                    return false
+                }
+            }
             return true
         }
     })
