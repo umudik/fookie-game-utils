@@ -20,7 +20,9 @@ module.exports = async function (ctx) {
                 rule: ["rp_race_is_started"],
                 role: ["system", "logged_in"],
                 accept: {
-                    logged_in: ["rp_set_player"]
+                    logged_in: {
+                        modify: ["rp_set_player"]
+                    }
                 }
             },
             read: {

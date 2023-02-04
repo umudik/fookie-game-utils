@@ -16,7 +16,7 @@ module.exports = async function (ctx) {
                 required: true,
                 default: true
             },
-            owner: {
+            player: {
                 relation: "player",
                 required: true,
             },

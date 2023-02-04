@@ -27,7 +27,9 @@ module.exports = async function (ctx) {
                 role: ["system", "logged_in"],
                 effect: ["craft_items"],
                 accept: {
-                    logged_in: ["craft_set_player_inventory"]
+                    logged_in: {
+                        modify: ["craft_set_player_inventory"]
+                    }
                 }
             },
             delete: {

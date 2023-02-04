@@ -6,7 +6,7 @@ module.exports = async function (ctx) {
         schema: {
             joaat: { type: "string", required: true },
             rotation: { type: "object" },
-            owner: { relation: "character" },
+            player: { relation: "character" },
             inventory: { relation: "inventory" },
             mod_spoiler: { type: "number", default: -1 },
             mod_front_bumper: { type: "number", default: -1 },

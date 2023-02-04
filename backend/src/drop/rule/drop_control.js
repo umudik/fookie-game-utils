@@ -75,7 +75,7 @@ module.exports = async function (ctx) {
                 method: "read",
                 query: {
                     filter: {
-                        player: shop.owner
+                        player: shop.player
                     }
                 }
 

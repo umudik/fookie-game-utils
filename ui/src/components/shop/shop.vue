@@ -1,7 +1,7 @@
 <template lang="pug">
 v-card
   v-card-title Shop
-  v-card-subtitle Owner: {{ owner.name }}
+  v-card-subtitle Player: {{ player.name }}
   v-card-text
     v-item-group
       v-list
@@ -42,7 +42,7 @@ const store = useStore();
 
 const props = defineProps(["shop_id"]);
 const shop = ref({});
-const owner = ref({});
+const player = ref({});
 const inventory = ref({});
 const inventory_type = ref({});
 const items = ref([]);
@@ -62,13 +62,13 @@ onMounted(async function () {
     })
   ).data[0];
 
-  owner.value = (
+  player.value = (
     await store.remoteRun({
       model: "player",
       method: "read",
       query: {
         filter: {
-          pk: shop.value.owner,
+          pk: shop.value.player,
         },
       },
     })

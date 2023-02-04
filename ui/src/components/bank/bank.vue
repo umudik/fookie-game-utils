@@ -1,7 +1,7 @@
 <template lang="pug">
 v-card
   v-card-title Bank
-  v-card-subtitle {{ owner.name }}
+  v-card-subtitle {{ player.name }}
   v-card-text Balance: {{ balance }}$
   v-divider
   v-card-text
@@ -27,7 +27,7 @@ import { onMounted, ref, watch, defineProps } from "vue";
 const store = useStore();
 
 const bank_account = ref({});
-const owner = ref({});
+const player = ref({});
 const inventory = ref({});
 const items = ref([]);
 const balance = ref(0);
@@ -35,7 +35,7 @@ const amount = ref(0);
 const money = lodash.find(store.data.item_type, { name: "money" });
 
 onMounted(async function () {
-  owner.value = (
+  player.value = (
     await store.remoteRun({
       model: "player",
       method: "read",
@@ -52,7 +52,7 @@ onMounted(async function () {
       method: "read",
       query: {
         filter: {
-          player: owner.value.id,
+          player: player.value.id,
         },
       },
     })
@@ -90,7 +90,7 @@ const withdraw = async function () {
     method: "create",
     body: {
       from: bank_account.value.inventory,
-      to: owner.value.inventory,
+      to: player.value.inventory,
       item_type: money.id,
       amount: Number(amount.value),
     },
@@ -103,7 +103,7 @@ const deposit = async function () {
     model: "move_item",
     method: "create",
     body: {
-      from: owner.value.inventory,
+      from: player.value.inventory,
       to: bank_account.value.inventory,
       item_type: money.id,
       amount: Number(amount.value),

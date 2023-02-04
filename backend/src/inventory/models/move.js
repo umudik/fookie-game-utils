@@ -28,6 +28,11 @@ module.exports = async function (ctx) {
                 rule: ["move_rule", "move_inventory_type_check"],
                 role: ["system", "logged_in"],
                 effect: ["move_effect"],
+                accept: {
+                    logged_in: {
+                        rule: ["logged_in_move_rule"]
+                    }
+                }
             },
             read: {
                 role: ["everybody"],
@@ -41,150 +46,6 @@ module.exports = async function (ctx) {
             count: {
                 role: ["system"],
             },
-        }
-    })
-
-    await ctx.lifecycle({
-        name: "move_rule",
-        wait: true,
-        function: async function (payload, ctx, state) {
-            // envanterde item var mı 
-            const amount = await ctx.helpers.itemsAmount(payload.body.from, payload.body.item_type)
-            if (amount < payload.body.amount) {
-                return false
-            }
-
-            // target'in envanterinde yer var mı 
-            const item_test = (await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "item",
-                method: "test",
-                body: {
-                    inventory: payload.body.to,
-                    item_type: payload.body.item_type,
-                    amount: payload.body.amount,
-
-                },
-                options: {
-                    method: "create"
-                }
-            })).data
-
-            if (!item_test.status) {
-                return false
-            }
-            return true
-        }
-    })
-
-    await ctx.lifecycle({
-        name: "move_inventory_type_check",
-        wait: true,
-        function: async function (payload, ctx, state) {
-            const from_inventory = (await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "inventory",
-                method: "read",
-                query: {
-                    filter: {
-                        pk: payload.body.from,
-                    }
-                },
-
-            })).data[0]
-
-            const to_inventory = (await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "inventory",
-                method: "read",
-                query: {
-                    filter: {
-                        pk: payload.body.to,
-                    }
-                },
-
-            })).data[0]
-
-
-            const from_type = (await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "inventory_type",
-                method: "read",
-                query: {
-                    filter: {
-                        pk: from_inventory.inventory_type
-                    }
-                },
-
-            })).data[0]
-
-            const to_type = (await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "inventory_type",
-                method: "read",
-                query: {
-                    filter: {
-                        pk: to_inventory.inventory_type
-                    }
-                },
-
-            })).data[0]
-
-
-            const move_in_same_inv = payload.body.to === payload.body.from
-
-            if (to_type.name === "drop" || from_type.name === "drop") {
-                if (to_type.name === "drop" && from_type.name !== "player") {
-                    return false
-                }
-
-                if (to_type.name === "player" && from_type.name !== "drop") {
-                    return false
-                }
-            }
-
-            if (to_type.name === "bank" || from_type.name === "bank") {
-                if (to_type.name === "bank" && from_type.name !== "player") {
-                    return false
-                }
-
-                if (to_type.name === "player" && from_type.name !== "bank") {
-                    return false
-                }
-            }
-
-
-
-
-
-            if (state.user) {
-                if (!(payload.body.from === state.user.inventory || payload.body.to === state.user.inventory)) {
-                    return false
-                }
-            }
-            return true
-        }
-    })
-
-    await ctx.lifecycle({
-        name: "move_effect",
-        wait: true,
-        function: async function (payload, ctx, state) {
-            await ctx.helpers.removeItems(payload.body.from, payload.body.item_type, payload.body.amount)
-
-            const item = (await ctx.run({
-                token: process.env.SYSTEM_TOKEN,
-                model: "item",
-                method: "create",
-                body: {
-                    inventory: payload.body.to,
-                    item_type: payload.body.item_type,
-                    amount: payload.body.amount
-                },
-                options: {
-                    dont_organise: true
-                }
-            })).data
         }
     })
 }

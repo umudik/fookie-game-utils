@@ -11,7 +11,7 @@ module.exports = async function (ctx) {
                 method: "count",
                 query: {
                     filter: {
-                        owner: payload.body.owner
+                        player: payload.body.player
                     }
                 }
 

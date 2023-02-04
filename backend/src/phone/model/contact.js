@@ -2,7 +2,7 @@ module.exports = async function (ctx) {
     await ctx.model({
         name: 'contact',
         schema: {
-            owner: {
+            player: {
                 relation: "character",
             },
             other: {

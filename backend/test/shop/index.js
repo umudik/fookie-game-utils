@@ -35,13 +35,13 @@ module.exports = async function (ctx) {
                     image: "https://i.picsum.photos/id/309/200/200.jpg?hmac=CV40Xz7anjWDJQgU2hAMvKhl5yWiUTCLTZqejhKkKs4"
                 }
             })).data
-            console.log(lemon);
+
             const shop_create = await ctx.run({
                 token: state.system_token,
                 model: "shop",
                 method: "create",
                 body: {
-                    owner: state.user_id,
+                    player: state.user_id,
                     title: "MY Shop",
                 }
             })

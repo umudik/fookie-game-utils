@@ -18,7 +18,7 @@ module.exports = async function (ctx) {
                 required: true,
                 default: -1,
             },
-            owner: {
+            player: {
                 relation: "player",
             },
         },
@@ -26,7 +26,9 @@ module.exports = async function (ctx) {
             create: {
                 role: ["system", "logged_in"],
                 accept: {
-                    loggein_in: ["race_set_player"]
+                    loggein_in: {
+                        modify: ["race_set_player"]
+                    }
                 }
             },
             read: {
@@ -37,7 +39,9 @@ module.exports = async function (ctx) {
                 role: ["system", "logged_in"],
                 modify: ["set_computed_data"],
                 accept: {
-                    loggein_in: ["race_set_player"]
+                    loggein_in: {
+                        modify: ["race_set_player"]
+                    }
                 }
             },
             delete: {

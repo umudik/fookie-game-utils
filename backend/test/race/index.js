@@ -42,7 +42,7 @@ module.exports = async function (ctx) {
                 method: "create",
                 body: {
                     race_type: race_type[ctx.helpers.pk("race_type")],
-                    owner: player[ctx.helpers.pk("player")],
+                    player: player[ctx.helpers.pk("player")],
                 }
             })).data
 

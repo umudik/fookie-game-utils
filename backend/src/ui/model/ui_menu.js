@@ -25,7 +25,9 @@ module.exports = async function (ctx) {
       },
       create: {
         accept: {
-          logged_in: ["add_player_to_menu"]
+          logged_in: {
+            modify: ["add_player_to_menu"]
+          }
         },
         role: ["system", "logged_in"],
         effect: ["menu_open"]

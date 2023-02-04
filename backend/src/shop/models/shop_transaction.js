@@ -32,7 +32,9 @@ module.exports = async function (ctx) {
                 effect: ["pay_amount_and_give_item"],
                 role: ["system", "logged_in"],
                 accept: {
-                    logged_in: ["shop_set_player"]
+                    logged_in: {
+                        modify: ["shop_set_player"]
+                    }
                 }
             },
             read: {
