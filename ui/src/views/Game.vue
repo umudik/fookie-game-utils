@@ -8,6 +8,8 @@ v-app(app)
         v-tab(value="crafting") Crafting
         v-tab(value="shop") Shop
         v-tab(value="bank") Bank
+        v-tab(value="race_edit") Race Edit
+
       v-window(v-model="tab")
         v-window-item(value="player_inventory")
           v-row
@@ -32,6 +34,10 @@ v-app(app)
               f_inventory(:inventory_id="store.player.inventory")
             v-col(cols="12", sm="7")
               f_bank
+        v-window-item(value="race_edit")
+          v-row
+            v-col(cols="12", sm="5", offset="7")
+              f_race(:player_id="store.player_id")
 </template>
 
 <script setup>
@@ -41,6 +47,7 @@ import f_inventory from "@/components/inventory/inventory.vue";
 import f_crafting from "@/components/crafting/crafting.vue";
 import f_shop from "@/components/shop/shop.vue";
 import f_bank from "@/components/bank/bank.vue";
+import f_race from "@/components/race/race.vue";
 import { useStore } from "@/store/index.js";
 import { onBeforeMount, onMounted, ref, watch } from "vue";
 const store = useStore();
